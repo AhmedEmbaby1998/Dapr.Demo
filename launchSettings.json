@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "dapr.demo.inventoryservice.api": "StartDebugging",
+        "dapr.demo.orderingservice.api": "StartDebugging"
+      }
+    }
+  }
+}

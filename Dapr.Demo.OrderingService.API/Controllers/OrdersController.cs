@@ -22,7 +22,7 @@ namespace Dapr.Demo.OrderingService.API.Controllers
         {
             var avalableQuantity= await _daprClient.InvokeMethodAsync<int>(
                 httpMethod: HttpMethod.Get,
-                appId: "my-app",
+                appId: "inventory-service",
                 methodName: $"inventory/stock/{productId}");
 
             if (avalableQuantity < qty)

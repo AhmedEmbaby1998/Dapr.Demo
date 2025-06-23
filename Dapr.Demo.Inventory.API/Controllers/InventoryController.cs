@@ -23,9 +23,7 @@ namespace Dapr.Demo.Inventory.API.Controllers
         [HttpGet("stock/{productId}")]
         public async Task<ActionResult<int>> Get([FromRoute]int productId)
         {
-            return PRODUCT_PAIR_STOCK.TryGetValue(productId, out var stock)
-                ? Ok(stock)
-                : NotFound();
+            return Ok(22);
         }
     }
 }

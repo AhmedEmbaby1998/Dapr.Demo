@@ -1,0 +1,148 @@
+version: '3.8'
+
+services:
+  # Redis for Dapr state store and workflow backend
+  redis:
+    image: redis:7-alpine
+    container_name: dapr-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - dapr-network
+
+  # ActiveMQ for pub/sub
+  activemq:
+    image: apache/activemq-artemis:latest
+    container_name: dapr-activemq
+    ports:
+      - "61616:61616"  # AMQP port
+      - "8161:8161"    # Web console
+    environment:
+      - ARTEMIS_USERNAME=admin
+      - ARTEMIS_PASSWORD=admin
+    networks:
+      - dapr-network
+    volumes:
+      - activemq-data:/var/lib/artemis-instance
+
+  # Placement service for Dapr actors/workflow
+  dapr-placement:
+    image: daprio/dapr:1.14.1
+    container_name: dapr-placement
+    command: ["./placement", "-port", "50006", "-log-level", "debug"]
+    ports:
+      - "50006:50006"
+    networks:
+      - dapr-network
+
+  # Order Service
+  order-service:
+    build:
+      context: /mnt/d/SelfDevDemos/Dapr.Demo.OrderingService.API/Dapr.Demo.OrderingService.API
+      dockerfile: Dockerfile
+    container_name: order-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5001:80"
+    networks:
+      - dapr-network
+    depends_on:
+      - redis
+      - activemq
+      - dapr-placement
+
+  # Order Service Dapr Sidecar
+  order-service-dapr:
+    image: daprio/daprd:1.14.1
+    container_name: order-service-dapr
+    command: [
+      "./daprd",
+      "-app-id", "order-service",
+      "-app-port", "80",
+      "-dapr-http-port", "3500",
+      "-dapr-grpc-port", "50001",
+      "-placement-host-address", "dapr-placement:50006",
+      "-components-path", "/components",
+      "-config", "/configuration/config.yaml",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./dapr/components:/components"
+      - "./dapr/configuration:/configuration"
+    ports:
+      - "3500:3500"
+      - "50001:50001"
+    networks:
+      - dapr-network
+    depends_on:
+      - order-service
+      - redis
+      - activemq
+      - dapr-placement
+
+  # Inventory Service
+  inventory-service:
+    build:
+      context: /mnt/d/SelfDevDemos/Dapr.Demo.OrderingService.API/Dapr.Demo.Inventory.API
+      dockerfile: Dockerfile
+    container_name: inventory-service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5002:80"
+    networks:
+      - dapr-network
+    depends_on:
+      - redis
+      - activemq
+      - dapr-placement
+
+  # Inventory Service Dapr Sidecar
+  inventory-service-dapr:
+    image: daprio/daprd:1.14.1
+    container_name: inventory-service-dapr
+    command: [
+      "./daprd",
+      "-app-id", "inventory-service",
+      "-app-port", "80",
+      "-dapr-http-port", "3501",
+      "-dapr-grpc-port", "50002",
+      "-placement-host-address", "dapr-placement:50006",
+      "-components-path", "/components",
+      "-config", "/configuration/config.yaml",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./dapr/components:/components"
+      - "./dapr/configuration:/configuration"
+    ports:
+      - "3501:3501"
+      - "50002:50002"
+    networks:
+      - dapr-network
+    depends_on:
+      - inventory-service
+      - redis
+      - activemq
+      - dapr-placement
+
+  # Dapr Dashboard
+  dapr-dashboard:
+    image: daprio/dashboard:0.14.0
+    container_name: dapr-dashboard
+    ports:
+      - "8080:8080"
+    networks:
+      - dapr-network
+    depends_on:
+      - dapr-placement
+
+volumes:
+  activemq-data:
+
+networks:
+  dapr-network:
+    driver: bridge
