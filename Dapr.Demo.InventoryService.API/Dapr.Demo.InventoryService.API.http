@@ -1,0 +1,6 @@
+@Dapr.Demo.InventoryService.API_HostAddress = http://localhost:5146
+
+GET {{Dapr.Demo.InventoryService.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

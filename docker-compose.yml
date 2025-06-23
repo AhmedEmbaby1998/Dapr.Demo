@@ -86,7 +86,7 @@ services:
   inventory-service:
     build:
       context: .
-      dockerfile: Dapr.Demo.Inventory.API/Dockerfile
+      dockerfile: Dapr.Demo.InventoryService.API/Dockerfile
     container_name: inventory-service
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
