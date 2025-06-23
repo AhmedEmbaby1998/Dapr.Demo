@@ -5,9 +5,9 @@ VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapr.Demo.OrderingService.API", "Dapr.Demo.OrderingService.API\Dapr.Demo.OrderingService.API.csproj", "{BB157710-B318-47EE-9A1E-9BD985EBB00B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapr.Demo.InventoryService.API", "Dapr.Demo.Inventory.API\Dapr.Demo.InventoryService.API.csproj", "{97142D4C-6C0B-480D-B9A3-AA7039A7C855}"
-EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0FF71FB3-5D0E-405C-898B-2F88D396A3D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapr.Demo.InventoryService.API", "..\Dapr.Demo.InventoryService.API\Dapr.Demo.InventoryService.API.csproj", "{6B877937-C129-4A51-BB90-ADE5E8FA76FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{BB157710-B318-47EE-9A1E-9BD985EBB00B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB157710-B318-47EE-9A1E-9BD985EBB00B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB157710-B318-47EE-9A1E-9BD985EBB00B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97142D4C-6C0B-480D-B9A3-AA7039A7C855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97142D4C-6C0B-480D-B9A3-AA7039A7C855}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97142D4C-6C0B-480D-B9A3-AA7039A7C855}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97142D4C-6C0B-480D-B9A3-AA7039A7C855}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0FF71FB3-5D0E-405C-898B-2F88D396A3D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0FF71FB3-5D0E-405C-898B-2F88D396A3D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF71FB3-5D0E-405C-898B-2F88D396A3D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF71FB3-5D0E-405C-898B-2F88D396A3D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B877937-C129-4A51-BB90-ADE5E8FA76FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B877937-C129-4A51-BB90-ADE5E8FA76FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B877937-C129-4A51-BB90-ADE5E8FA76FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B877937-C129-4A51-BB90-ADE5E8FA76FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
